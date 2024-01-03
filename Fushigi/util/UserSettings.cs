@@ -27,6 +27,7 @@ namespace Fushigi.util
             public List<string> RecentCourses;
             public bool UseGameShaders;
             public bool UseAstcTextureCache;
+            public float UiScale;
 
             public Settings()
             {
@@ -36,6 +37,7 @@ namespace Fushigi.util
                 RecentCourses = new List<string>(MaxRecents);
                 UseGameShaders = false;
                 UseAstcTextureCache = false;
+                UiScale = 1.0f;
             }
         }
 
@@ -44,6 +46,8 @@ namespace Fushigi.util
             AppSettings = new Settings();
             if (File.Exists(SettingsFile))
                 AppSettings = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(SettingsFile));
+            if (AppSettings.UiScale < 0.25f)
+                AppSettings.UiScale = 1.0f;
         }
 
         public static void Save()
@@ -58,6 +62,13 @@ namespace Fushigi.util
 
         public static bool UseGameShaders() => AppSettings.UseGameShaders;
         public static bool UseAstcTextureCache() => AppSettings.UseAstcTextureCache;
+        public static float GetUiScale() => AppSettings.UiScale;
+        
+        public static void SetUiScale(float value)
+        {
+            AppSettings.UiScale = value;
+            Save(); //save setting
+        }
 
         public static void SetGameShaders(bool value)
         {

@@ -16,6 +16,7 @@ namespace Fushigi.ui.widgets
         {
             if (ImGui.Begin("History"))
             {
+                ImGui.SetWindowFontScale(UserSettings.GetUiScale());
                 if (ImGui.Button($"{IconUtil.ICON_UNDO}"))
                 {
                     context.Undo();

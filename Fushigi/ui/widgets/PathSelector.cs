@@ -1,4 +1,5 @@
-﻿using ImGuiNET;
+﻿using Fushigi.util;
+using ImGuiNET;
 using System.Numerics;
 
 namespace Fushigi.ui.widgets
@@ -20,7 +21,7 @@ namespace Fushigi.ui.widgets
 
             ImGui.Columns(2);
 
-            ImGui.SetColumnWidth(0, 150);
+            ImGui.SetColumnWidth(0, 150 * UserSettings.GetUiScale());
 
             bool edited = false;
 
@@ -28,7 +29,7 @@ namespace Fushigi.ui.widgets
 
             ImGui.NextColumn();
 
-            ImGui.PushItemWidth(ImGui.GetColumnWidth() - 100);
+            ImGui.PushItemWidth(ImGui.GetColumnWidth() - 100 * UserSettings.GetUiScale());
 
             if (!isValid)
             {

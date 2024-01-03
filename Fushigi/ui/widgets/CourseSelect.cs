@@ -64,8 +64,8 @@ namespace Fushigi.ui.widgets
 
         void DrawCourses(Promise<string> promise)
         {
-            var fontSize = ImGui.GetFontSize();
             var font = ImGui.GetFont();
+            var fontSize = font.FontSize;
             font.FontSize = worldNameSize;
             ImGui.Text(RomFS.GetCourseEntries()[selectedWorld!].name);
             font.FontSize = fontSize;

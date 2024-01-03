@@ -1,5 +1,6 @@
 ﻿using Fushigi.gl;
 using Fushigi.param;
+using Fushigi.ui.helpers;
 using Fushigi.ui.modal;
 using Fushigi.util;
 using ImGuiNET;
@@ -13,6 +14,7 @@ namespace Fushigi.ui.widgets
         static readonly Vector4 errCol = new Vector4(1f, 0, 0, 1);
         static bool romfsTouched = false;
         static bool modRomfsTouched = false;
+        static float uiScale = UserSettings.GetUiScale();
 
         public static void Draw(ref bool continueDisplay, GLTaskScheduler glTaskScheduler,
             IPopupModalHost modalHost)
@@ -20,6 +22,8 @@ namespace Fushigi.ui.widgets
             ImGui.SetNextWindowSize(new Vector2(700, 250), ImGuiCond.Once);
             if (ImGui.Begin("Preferences", ImGuiWindowFlags.NoDocking))
             {
+                ImGui.SetWindowFontScale(UserSettings.GetUiScale());
+
                 var romfs = UserSettings.GetRomFSPath();
                 var mod = UserSettings.GetModRomFSPath();
                 var useGameShaders = UserSettings.UseGameShaders();
@@ -99,6 +103,19 @@ namespace Fushigi.ui.widgets
                 }
 
                 Tooltip.Show("Saves ASTC textures to disk which takes up disk space, but improves loading times and ram usage significantly.");
+
+                ImGui.SliderFloat("Ui Scale", ref uiScale, 0.25f, 4.0f);
+
+                ImGui.SameLine();
+
+
+                if (ImGui.Button("Apply Ui Scale"))
+                {
+                    ImGui.GetStyle().ScaleAllSizes(1.0f / UserSettings.GetUiScale());
+                    UserSettings.SetUiScale(uiScale);
+                    ImGui.GetStyle().ScaleAllSizes(uiScale);
+
+                }
 
                 ImGui.Unindent();
 

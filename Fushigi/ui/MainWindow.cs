@@ -59,9 +59,9 @@ namespace Fushigi.ui
                                 Path.Combine("res", "Font.ttf"),
                                 size, nativeConfig, io.Fonts.GetGlyphRangesDefault());
 
-                             io.Fonts.AddFontFromFileTTF(
+                            io.Fonts.AddFontFromFileTTF(
                                 Path.Combine("res", "NotoSansCJKjp-Medium.otf"),
-                                    size, nativeConfigJP, io.Fonts.GetGlyphRangesJapanese());
+                                size, nativeConfigJP, io.Fonts.GetGlyphRangesJapanese());
 
                             //other fonts go here and follow the same schema
                             GCHandle rangeHandle = GCHandle.Alloc(new ushort[] { IconUtil.MIN_GLYPH_RANGE, IconUtil.MAX_GLYPH_RANGE, 0 }, GCHandleType.Pinned);
@@ -88,6 +88,7 @@ namespace Fushigi.ui
                             }
                         }
                     }
+                    ImGui.GetStyle().ScaleAllSizes(UserSettings.GetUiScale());
                 });
             mWindow.Load += () => WindowManager.RegisterRenderDelegate(mWindow, Render);
             mWindow.Closing += Close;
@@ -230,8 +231,11 @@ namespace Fushigi.ui
             /* create a new menubar */
             if (ImGui.BeginMainMenuBar())
             {
+
                 if (ImGui.BeginMenu("File"))
                 {
+                ImGui.SetWindowFontScale(UserSettings.GetUiScale());
+
                     if (!string.IsNullOrEmpty(RomFS.GetRoot()) &&
                         !string.IsNullOrEmpty(UserSettings.GetModRomFSPath()))
                     {
@@ -260,7 +264,7 @@ namespace Fushigi.ui
                     var text_color = mSelectedCourseScene == null ?
                          ImGui.GetStyle().Colors[(int)ImGuiCol.TextDisabled] :
                          ImGui.GetStyle().Colors[(int)ImGuiCol.Text];
-
+                    
                     ImGui.PushStyleColor(ImGuiCol.Text, ImGui.ColorConvertFloat4ToU32(text_color));
 
                     if (ImGui.MenuItem("Save") && mSelectedCourseScene != null)
@@ -317,6 +321,8 @@ namespace Fushigi.ui
 
                 if (ImGui.BeginMenu("Edit"))
                 {
+                ImGui.SetWindowFontScale(UserSettings.GetUiScale());
+
                     if (ImGui.MenuItem("Preferences"))
                     {
                         mIsShowPreferenceWindow = true;
@@ -342,7 +348,7 @@ namespace Fushigi.ui
                 }
 
                 /* end entire menu bar */
-                ImGui.EndMenuBar();
+                ImGui.EndMainMenuBar();
             }
         }
 
@@ -356,6 +362,8 @@ namespace Fushigi.ui
             gl.ClearColor(.45f, .55f, .60f, 1f);
             gl.Clear((uint)ClearBufferMask.ColorBufferBit);
 
+            DrawMainMenu();
+
             ImGui.GetIO().ConfigFlags |= ImGuiConfigFlags.DockingEnable;
             ImGui.DockSpaceOverViewport();
 
@@ -365,9 +373,6 @@ namespace Fushigi.ui
                 ImGui.LoadIniSettingsFromDisk("imgui.ini");
                 _ = StartupRoutine();
             }
-
-            DrawMainMenu();
-
             
             if (!string.IsNullOrEmpty(RomFS.GetRoot()) &&
                 !string.IsNullOrEmpty(UserSettings.GetModRomFSPath()))

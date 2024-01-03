@@ -1,4 +1,5 @@
 .vs/*
+.vscode/*
 Fushigi/.vs/*
 .idea/*
 Fushigi/.idea/*
@@ -18,3 +19,11 @@ SARC/obj/*
 .DS_Store
 ConsoleApp1/*
 ConsoleApp2/*
+Fushigi/ShaderCache/*
+Fushigi/res/actor_icons/*
+Fushigi/actors.json
+Fushigi/components.json
+Fushigi/imgui.ini
+Fushigi/output.log
+Fushigi/railParams.json
+Fushigi/rails.json

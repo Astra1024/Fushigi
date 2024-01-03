@@ -214,6 +214,8 @@ namespace Fushigi.ui.widgets
             ulong selectionVersionBefore = areaScenes[selectedArea].EditContext.SelectionVersion;
 
             bool status = ImGui.Begin("Viewports", ImGuiWindowFlags.NoNav);
+            ImGui.SetWindowFontScale(UserSettings.GetUiScale());
+
 
             ImGui.DockSpace(0x100, ImGui.GetContentRegionAvail());
 
@@ -226,6 +228,8 @@ namespace Fushigi.ui.widgets
 
                 if (ImGui.Begin(area.GetName(), ImGuiWindowFlags.NoNav))
                 {
+                    ImGui.SetWindowFontScale(UserSettings.GetUiScale());
+
                     if (ImGui.BeginChild("viewport_menu_bar", new Vector2(ImGui.GetWindowWidth(), 30)))
                     {
                         Vector2 icon_size = new Vector2(25, 25);
@@ -425,6 +429,8 @@ namespace Fushigi.ui.widgets
         private void ActorsPanel()
         {
             ImGui.Begin("Actors");
+            ImGui.SetWindowFontScale(UserSettings.GetUiScale());
+
 
             if (ImGui.Button("Add Actor"))
             {
@@ -461,6 +467,7 @@ namespace Fushigi.ui.widgets
         private void BGUnitPanel()
         {
             ImGui.Begin("Terrain Units");
+            ImGui.SetWindowFontScale(UserSettings.GetUiScale());
 
             CourseUnitView(selectedArea.mUnitHolder);
 
@@ -470,6 +477,7 @@ namespace Fushigi.ui.widgets
         private void RailsPanel()
         {
             ImGui.Begin("Rails");
+            ImGui.SetWindowFontScale(UserSettings.GetUiScale());
 
             CourseRailHolder railArray = selectedArea.mRailHolder;
 
@@ -481,6 +489,7 @@ namespace Fushigi.ui.widgets
         private void GlobalLinksPanel()
         {
             ImGui.Begin("Global Links");
+            ImGui.SetWindowFontScale(UserSettings.GetUiScale());
 
             if (ImGui.Button("Add Link"))
             {
@@ -497,6 +506,7 @@ namespace Fushigi.ui.widgets
         private void LocalLinksPanel()
         {
             ImGui.Begin("Local Links");
+            ImGui.SetWindowFontScale(UserSettings.GetUiScale());
 
             ImGui.Checkbox("Wonder View", ref activeViewport.IsWonderView);
 
@@ -510,6 +520,7 @@ namespace Fushigi.ui.widgets
         private void RailLinksPanel()
         {
             ImGui.Begin("Actor to Rail Links");
+            ImGui.SetWindowFontScale(UserSettings.GetUiScale());
 
             ImGui.Columns(4);
             ImGui.Text("Actor-Hash");
@@ -601,6 +612,8 @@ namespace Fushigi.ui.widgets
             var editContext = areaScenes[selectedArea].EditContext;
 
             bool status = ImGui.Begin("Selection Parameters", ImGuiWindowFlags.AlwaysVerticalScrollbar);
+            ImGui.SetWindowFontScale(UserSettings.GetUiScale());
+
 
             if (editContext.IsSingleObjectSelected(out CourseActor? mSelectedActor))
             {
@@ -1736,6 +1749,8 @@ namespace Fushigi.ui.widgets
             var editContext = areaScenes[area].EditContext;
             var view = viewports[area];
             bool status = ImGui.Begin("Minimap", ImGuiWindowFlags.NoNav);
+            ImGui.SetWindowFontScale(UserSettings.GetUiScale());
+
 
             var widgetTopLeft = ImGui.GetCursorScreenPos();
 

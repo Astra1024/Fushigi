@@ -50,6 +50,8 @@ namespace Fushigi.ui.widgets
             if (ImGui.Begin("CategorizedWarnings",
                 ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoNavFocus))
             {
+                ImGui.SetWindowFontScale(UserSettings.GetUiScale());
+
                 var headerStickPosY = 0f;
                 foreach (var (category, warnings) in mCategorizedWarnings)
                 {
