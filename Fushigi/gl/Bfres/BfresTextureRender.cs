@@ -29,6 +29,13 @@ namespace Fushigi.gl.Bfres
         public BfresTextureRender(GL gl, BntxTexture texture) : base(gl)
         {
             Load(texture);
+            
+            var error = gl.GetError();
+            if (error != GLEnum.NoError)
+            {
+                Console.WriteLine($"OpenGL Error: {error} loading texture {texture.Name}");
+                // throw new Exception();
+            }
         }
 
 
@@ -38,6 +45,7 @@ namespace Fushigi.gl.Bfres
 
         public void Load(BntxTexture texture)
         {
+
             this.Target = TextureTarget.Texture2D;
             this.IsSrgb = texture.IsSrgb;
             this.Name = texture.Name;

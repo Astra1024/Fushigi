@@ -77,6 +77,14 @@ namespace Fushigi.gl.Bfres
                 Skeleton = model.Skeleton;
                 foreach (var shape in model.Shapes.Values)
                     Meshes.Add(new BfresMesh(gl, this, model, shape));
+
+                
+                var error = gl.GetError();
+                if (error != GLEnum.NoError)
+                {
+                    Console.WriteLine($"OpenGL Error: {error} generating model {model.Name}");
+                    // throw new Exception();
+                }
             }
 
             //Cached

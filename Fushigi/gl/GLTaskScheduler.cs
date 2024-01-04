@@ -9,7 +9,7 @@ namespace Fushigi.gl
 {
     public class GLTaskScheduler
     {
-        private List<(TaskCompletionSource promise, Action<GL> task)> mPending = [];
+        private List<(TaskCompletionSource promise, Action<GL> task, System.Diagnostics.StackTrace stack)> mPending = [];
 
         public async Task<TResult> Schedule<TResult>(Func<GL, TResult> task)
         {
@@ -27,7 +27,7 @@ namespace Fushigi.gl
 
             lock (mPending)
             {
-                mPending.Add((promise, task));
+                mPending.Add((promise, task, new System.Diagnostics.StackTrace(true)));
             }
 
             return promise.Task;
@@ -42,9 +42,15 @@ namespace Fushigi.gl
             int i = 0;
             while (i < count)
             {
-                (TaskCompletionSource promise, Action<GL> task) = mPending[i++];
+                (TaskCompletionSource promise, Action<GL> task, System.Diagnostics.StackTrace stack) = mPending[i++];
                 task.Invoke(gl);
                 promise.SetResult();
+
+                var error = gl.GetError();
+                if (error != GLEnum.NoError)
+                {
+                    Console.WriteLine($"OpenGL Error: {error} while executing {task}\n Stack:\n{stack}");
+                }
 
                 lock (mPending)
                     count = mPending.Count;

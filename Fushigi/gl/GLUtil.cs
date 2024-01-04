@@ -11,8 +11,21 @@ namespace Fushigi.gl
     {
         public static void Label(GL gl, ObjectIdentifier type, uint id, string text)
         {
+            var error = gl.GetError();
+            if (error != GLEnum.NoError)
+            {
+                Console.WriteLine($"Unknown OpenGL Error: {error}");
+                // throw new Exception();
+            }
 
             gl.ObjectLabel(type, id, (uint)text.Length, text);
+
+            error = gl.GetError();
+            if (error != GLEnum.NoError)
+            {
+                Console.WriteLine($"OpenGL Shader Error: {error} when labeling {text}");
+                // throw new Exception();
+            }
         }
     }
 }

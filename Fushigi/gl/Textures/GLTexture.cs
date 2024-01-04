@@ -64,7 +64,7 @@ namespace Fushigi.gl
         {
             _gl.TexParameter(Target, TextureParameterName.TextureMagFilter, (int)MagFilter);
             _gl.TexParameter(Target, TextureParameterName.TextureMinFilter, (int)MinFilter);
-            _gl.TexParameter(Target, TextureParameterName.TextureWrapS, (int)WrapS);
+            // _gl.TexParameter(Target, TextureParameterName.TextureWrapS, (int)WrapS); // This Produces an Error
             _gl.TexParameter(Target, TextureParameterName.TextureWrapT, (int)WrapT);
             _gl.TexParameter(Target, TextureParameterName.TextureWrapR, (int)WrapR);
         }
@@ -72,6 +72,8 @@ namespace Fushigi.gl
 
         public unsafe static GLTexture ToCopy(GL gl, GLTexture texture, TextureTarget target)
         {
+            CheckError(gl, "Pre-copy");
+
             //Src
             byte[] buffer = new byte[texture.Width * texture.Height * 4];
 
@@ -79,6 +81,7 @@ namespace Fushigi.gl
 
             texture.Bind();
             gl.GetTexImage(texture.Target, 0, texture.PixelFormat, texture.PixelType, buffer.AsSpan());
+            CheckError(gl, "Texture Retreival");
 
             //Use srgb if enabled
             //We only need to check RGBA and BC6 for ASTC copies
@@ -97,9 +100,11 @@ namespace Fushigi.gl
             tex.InternalFormat = dest_format;
             tex.PixelFormat = PixelFormat.Rgba;
             tex.PixelType = PixelType.UnsignedByte;
+            CheckError(gl, "Texture Initialization");
 
             //Dst
             tex.Bind();
+            CheckError(gl, "Destination Bind");
 
             //Copy
             fixed (byte* ptr = buffer)
@@ -107,21 +112,27 @@ namespace Fushigi.gl
                 gl.TexImage3D(tex.Target, 0, tex.InternalFormat, tex.Width, tex.Height, 1, 0,
                      tex.PixelFormat, tex.PixelType, ptr);
             }
+            CheckError(gl, "Texture Generation");
 
             gl.GenerateMipmap(tex.Target);
 
             //Check for errors
-            var error = gl.GetError();
-            if (error != GLEnum.NoError)
-            {
-                Console.WriteLine($"OpenGL Error: {error}");
-               // throw new Exception();
-            }
+            CheckError(gl, "MipMap Generation");
 
             //unbind
             tex.Unbind();
 
             return tex;
+        }
+
+        private static void CheckError(GL gl, String location)
+        {
+            var error = gl.GetError();
+            if (error != GLEnum.NoError)
+            {
+                Console.WriteLine($"OpenGL Texture Error: {error} at {location}");
+               // throw new Exception();
+            }
         }
 
         public void Dispose()

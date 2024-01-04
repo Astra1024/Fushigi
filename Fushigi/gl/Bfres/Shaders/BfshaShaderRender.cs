@@ -68,9 +68,9 @@ namespace Fushigi.gl.Bfres
                 this.LoadSupportingBlock();
             }
 
-            GLUtil.Label(gl, ObjectIdentifier.Buffer, MaterialBlock.ID,  "Material Block");
-            GLUtil.Label(gl, ObjectIdentifier.Buffer, ShapeBlock.ID, "Shape Block");
-            GLUtil.Label(gl, ObjectIdentifier.Buffer, MaterialOptionBlock.ID,  "Material Option");
+            GLUtil.Label(gl, ObjectIdentifier.Buffer, MaterialBlock.ID,  $"{material.Name} Material Block");
+            GLUtil.Label(gl, ObjectIdentifier.Buffer, ShapeBlock.ID, $"{material.Name} Shape Block");
+            GLUtil.Label(gl, ObjectIdentifier.Buffer, MaterialOptionBlock.ID, $"{material.Name} Material Option");
 
             SetMaterialBlock(MaterialBlock, material);
             SetShapeBlock(ShapeBlock, Matrix4x4.Identity);
@@ -348,6 +348,7 @@ namespace Fushigi.gl.Bfres
 
         private GLTexture CheckTargetType(GL gl, GLTexture tex, GLShader shader, int location)
         {
+
             string uniform_name = ConvertSamplerID(location, false);
             if (!shader.UniformInfo.ContainsKey(uniform_name))
                 return tex;
