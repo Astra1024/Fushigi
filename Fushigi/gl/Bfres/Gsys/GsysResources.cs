@@ -116,6 +116,13 @@ namespace Fushigi.gl.Bfres
             if (UserBlock2 == null)
                 UserBlock2 = new UniformBlock(gl);
 
+            gl.BindBuffer(GLEnum.UniformBuffer, ContextBlock.ID);
+            gl.BindBuffer(GLEnum.UniformBuffer, EnvironmentBlock.ID);
+            gl.BindBuffer(GLEnum.UniformBuffer, SceneMaterialBlock.ID);
+            gl.BindBuffer(GLEnum.UniformBuffer, UserBlock0.ID);
+            gl.BindBuffer(GLEnum.UniformBuffer, UserBlock1.ID);
+            gl.BindBuffer(GLEnum.UniformBuffer, UserBlock2.ID);
+
             UpdateEnvironment();
 
             //  CubeMap = GLTextureCubeArray.CreateEmpty(gl, 4, 4, 1);
@@ -164,8 +171,8 @@ namespace Fushigi.gl.Bfres
             LinearNormalizedDepth = GLTexture2D.CreateWhiteTex(gl, 4, 4);
             HalfLinearNormalizedDepth = GLTexture2D.CreateWhiteTex(gl, 4, 4);
 
-            GLUtil.Label(gl, ObjectIdentifier.Buffer, SSAO.ID, "SSAO");
-            GLUtil.Label(gl, ObjectIdentifier.Buffer, VolumeFog.ID, "VolumeFog");
+            GLUtil.Label(gl, ObjectIdentifier.Texture, SSAO.ID, "SSAO");
+            GLUtil.Label(gl, ObjectIdentifier.Texture, VolumeFog.ID, "VolumeFog");
 
             GLUtil.Label(gl, ObjectIdentifier.Buffer, ContextBlock.ID, "ContextBlock");
             GLUtil.Label(gl, ObjectIdentifier.Buffer, EnvironmentBlock.ID, "EnvironmentBlock");

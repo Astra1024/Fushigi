@@ -68,6 +68,10 @@ namespace Fushigi.gl.Bfres
                 this.LoadSupportingBlock();
             }
 
+            gl.BindBuffer(GLEnum.UniformBuffer, MaterialBlock.ID);
+            gl.BindBuffer(GLEnum.UniformBuffer, ShapeBlock.ID);
+            gl.BindBuffer(GLEnum.UniformBuffer, MaterialOptionBlock.ID);
+
             GLUtil.Label(gl, ObjectIdentifier.Buffer, MaterialBlock.ID,  $"{material.Name} Material Block");
             GLUtil.Label(gl, ObjectIdentifier.Buffer, ShapeBlock.ID, $"{material.Name} Shape Block");
             GLUtil.Label(gl, ObjectIdentifier.Buffer, MaterialOptionBlock.ID, $"{material.Name} Material Option");
