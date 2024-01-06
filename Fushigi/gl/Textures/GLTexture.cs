@@ -65,8 +65,8 @@ namespace Fushigi.gl
             _gl.TexParameter(Target, TextureParameterName.TextureMagFilter, (int)MagFilter);
             _gl.TexParameter(Target, TextureParameterName.TextureMinFilter, (int)MinFilter);
             // _gl.TexParameter(Target, TextureParameterName.TextureWrapS, (int)WrapS); // This Produces an Error
-            _gl.TexParameter(Target, TextureParameterName.TextureWrapT, (int)WrapT);
-            _gl.TexParameter(Target, TextureParameterName.TextureWrapR, (int)WrapR);
+            // _gl.TexParameter(Target, TextureParameterName.TextureWrapT, (int)WrapT);
+            // _gl.TexParameter(Target, TextureParameterName.TextureWrapR, (int)WrapR);
         }
 
 

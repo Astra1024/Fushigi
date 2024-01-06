@@ -230,9 +230,9 @@ namespace Fushigi.ui.widgets
                 {
                     ImGui.SetWindowFontScale(UserSettings.GetUiScale());
 
-                    if (ImGui.BeginChild("viewport_menu_bar", new Vector2(ImGui.GetWindowWidth(), 30)))
+                    if (ImGui.BeginChild("viewport_menu_bar", new Vector2(ImGui.GetWindowWidth(), 30 * UserSettings.GetUiScale())))
                     {
-                        Vector2 icon_size = new Vector2(25, 25);
+                        Vector2 icon_size = new Vector2(25 * UserSettings.GetUiScale(), 25 * UserSettings.GetUiScale());
 
                         ImGui.PushStyleColor(ImGuiCol.Button, 0);
 
@@ -266,7 +266,7 @@ namespace Fushigi.ui.widgets
                                 ImGui.SetItemDefaultFocus();
                         }
 
-                        ImGui.PushItemWidth(30);
+                        ImGui.PushItemWidth(30 * UserSettings.GetUiScale());
                         if (ImGui.BeginCombo($"##EnvPalette", $"{IconUtil.ICON_PALETTE}", ImGuiComboFlags.NoArrowButton))
                         {
                             SelectPalette($"Default Palette", area.mAreaParams.EnvPaletteSetting.InitPaletteBaseName);

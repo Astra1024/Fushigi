@@ -58,7 +58,7 @@ namespace Fushigi.gl.Bfres
         {
             if (Framebuffer == null)
                 Init(gl);
-
+                
             RenderLevel(gl, Output, 0);
         }
 
@@ -118,7 +118,7 @@ namespace Fushigi.gl.Bfres
                 shader.SetUniform($"lights[{i}].dir", this.Lights[i].Direction);
                 shader.SetUniform($"lights[{i}].lowerColor", this.Lights[i].LowerColor);
                 shader.SetUniform($"lights[{i}].upperColor", this.Lights[i].UpperColor);
-                shader.SetUniform($"lights[{i}].lutIndex", this.Lights[i].LutIndex);
+                shader.SetUniform($"lights[{i}].lutIndex", (int) this.Lights[i].LutIndex);
             }
         }
 
