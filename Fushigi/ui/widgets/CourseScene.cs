@@ -155,7 +155,7 @@ namespace Fushigi.ui.widgets
             for (int i = 0; i < resourceFiles.Count; i++)
             {
                 string? file = resourceFiles[i];
-                progress.Report(($"Loading models", i/(float)resourceFiles.Count));
+                progress.Report(($"Loading models from file {file}", i/(float)resourceFiles.Count));
                 await BfresCache.LoadAsync(glScheduler, file);
             }
         }
@@ -420,7 +420,7 @@ namespace Fushigi.ui.widgets
                     return fs.CanWrite;
                 }
             }
-            catch(IOException e)
+            catch (IOException)
             {
                 return false;
             }
@@ -1329,7 +1329,7 @@ namespace Fushigi.ui.widgets
 
             foreach (var unit in unitHolder.mUnits)
             {
-                var tree_flags = ImGuiTreeNodeFlags.None;
+                // var tree_flags = ImGuiTreeNodeFlags.None;
                 string name = $"Tile Unit {unitHolder.mUnits.IndexOf(unit)}";
 
                 ImGui.AlignTextToFramePadding();
@@ -1976,7 +1976,7 @@ namespace Fushigi.ui.widgets
                 .SelectMany(x => x.mTileSubUnits)
                 .OrderBy(x => x.mOrigin.Z);
 
-            var t = 0;
+            // var t = 0;
             foreach (var subUnit in foregroundSubUnits)
             {
                 var type = foregroundTileUnits.First(x => x.mTileSubUnits.Contains(subUnit)).mModelType;
