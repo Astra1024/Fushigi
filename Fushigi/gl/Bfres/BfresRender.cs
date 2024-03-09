@@ -100,7 +100,8 @@ namespace Fushigi.gl.Bfres
             {
                 foreach (var mesh in Meshes)
                 {
-                    mesh.LodMeshes[0].BoundingBox.Transform(transform);
+                    var m = mesh.LodMeshes[0].BoundingBox;
+                    m.Transform(transform);
                     BoundingBox.Include(mesh.LodMeshes[0].BoundingBox);
                 }
 
